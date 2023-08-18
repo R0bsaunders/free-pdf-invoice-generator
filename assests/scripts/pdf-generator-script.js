@@ -95,6 +95,8 @@ create()
 
 */
 
+// 1) Invoice Credentials
+
 var credentials = [
     {
         date: "18/07/2023",
@@ -104,6 +106,8 @@ var credentials = [
         billEmail: "info@meladoredevelopments.co.uk"
     }
 ];
+
+// 2) Invoice Description
 
 const description = [
     {
@@ -124,13 +128,25 @@ const description = [
     },
 ];
 
+// 3) Math
+
 var subTotal = addition(description[0].invoiceLines);
-var totalDue = subTotal - description[1].deposit - description[1].discount
-
-
+var totalDue = subTotal - description[1].deposit - description[1].discount;
 
 function addition (calc) {
+    
     let x = 0
     calc.forEach((e) => x += e.amount)
     return x;
-}
+};
+
+// 4) Bank Details
+
+var bankDetails = [
+    {
+        bankName: "Lloyds Bank",
+        accountName: "Robert Saunders",
+        sortCode: "40-55-99",
+        accountNumber: "15228965",
+    },
+];
