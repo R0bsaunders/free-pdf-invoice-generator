@@ -21,48 +21,6 @@ var options = {
     }
 };
 
-var users = [
-    {
-        name: "Shyam",
-        age: "26",
-    },
-    {
-        name: "Navjot",
-        age: "26",
-    },
-    {
-        name: "Vitthal",
-        age: "26",
-    },
-];
-
-var document = {
-    html: html,
-    data: {
-        users: users,
-    },
-    path: "./YoYo.pdf",
-    type: "",
-};
-// By default a file is created but you could switch between Buffer and Streams by using "buffer" or "stream" respectively.
-
-function create () {
-
-pdf
-  .create(document, options)
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-}
-
-create()
-
-
-
 
 
 // PDF Invoice Generator
@@ -109,7 +67,7 @@ var credentials = [
 
 // 2) Invoice Description
 
-const description = [
+var description = [
     {
         invoiceLines: [
             {
@@ -134,7 +92,7 @@ var subTotal = addition(description[0].invoiceLines);
 var totalDue = subTotal - description[1].deposit - description[1].discount;
 
 function addition (calc) {
-    
+
     let x = 0
     calc.forEach((e) => x += e.amount)
     return x;
@@ -150,3 +108,32 @@ var bankDetails = [
         accountNumber: "15228965",
     },
 ];
+
+var document = {
+    html: html,
+    data: {
+        credentials: credentials,
+        description: description,
+        subTotal: subTotal,
+        total: totalDue,
+        bank: bankDetails
+    },
+    path: "./invoice-"+credentials[0].invoiceNo+".pdf",
+    type: "",
+};
+// By default a file is created but you could switch between Buffer and Streams by using "buffer" or "stream" respectively.
+
+function create () {
+
+pdf
+  .create(document, options)
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+}
+
+create()
