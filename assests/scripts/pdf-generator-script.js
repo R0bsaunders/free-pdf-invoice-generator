@@ -8,7 +8,7 @@ var options = {
     border: "10mm",
     header: {
         height: "45mm",
-        contents: '<div style="text-align: center;">Author: Shyam Hajare</div>'
+        contents: '<div style="text-align: center;">Author: Yo Momma</div>'
     },
     footer: {
         height: "28mm",
@@ -46,6 +46,8 @@ var document = {
 };
 // By default a file is created but you could switch between Buffer and Streams by using "buffer" or "stream" respectively.
 
+function create () {
+
 pdf
   .create(document, options)
   .then((res) => {
@@ -54,3 +56,7 @@ pdf
   .catch((error) => {
     console.error(error);
   });
+
+}
+
+create()
