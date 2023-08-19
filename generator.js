@@ -2,7 +2,11 @@ var pdf = require("pdf-creator-node");
 var fs = require("fs");
 var html = fs.readFileSync("pdf-template.html", "utf8");
 
+const express = require('express');
+const app = express();
 
+
+console.log("Server is active");
 
 var options = {
     format: "A4",
@@ -120,7 +124,7 @@ var document = {
         total: totalDue,
         bank: bankDetails
     },
-    path: "../../invoice-"+credentials.invoiceNo+".pdf",
+    path: "invoice-"+credentials.invoiceNo+".pdf",
     type: "",
 };
 // By default a file is created but you could switch between Buffer and Streams by using "buffer" or "stream" respectively.
@@ -138,4 +142,16 @@ pdf
 
 }
 
-create()
+
+// Server
+
+app.set("view engine", "ejs");
+
+app.get('/make-me-a-pdf', (req, res) => {
+    console.log("wassup");
+    create();
+    res.send('Yo')
+    
+})
+
+app.listen(3000);
