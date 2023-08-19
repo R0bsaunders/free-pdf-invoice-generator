@@ -1,6 +1,8 @@
 var pdf = require("pdf-creator-node");
 var fs = require("fs");
-var html = fs.readFileSync("index.html", "utf8");
+var html = fs.readFileSync("pdf-template.html", "utf8");
+
+
 
 var options = {
     format: "A4",
@@ -118,7 +120,7 @@ var document = {
         total: totalDue,
         bank: bankDetails
     },
-    path: "./invoice-"+credentials.invoiceNo+".pdf",
+    path: "../../invoice-"+credentials.invoiceNo+".pdf",
     type: "",
 };
 // By default a file is created but you could switch between Buffer and Streams by using "buffer" or "stream" respectively.
