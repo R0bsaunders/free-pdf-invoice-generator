@@ -166,7 +166,7 @@
 							text-align: left;
 						"
 					>
-						10/07/2023
+						{{credentials.date}}
 					</p>
 				</td>
 			</tr>
@@ -194,7 +194,7 @@
 							text-align: left;
 						"
 					>
-						00111
+						{{credentials.invoiceNo}}
 					</p>
 				</td>
 			</tr>
@@ -222,7 +222,7 @@
 							text-align: left;
 						"
 					>
-						SEO - July 2023
+						{{credentials.summary}}
 					</p>
 				</td>
 			</tr>
@@ -257,7 +257,7 @@
 							text-align: left;
 						"
 					>
-						Meladore Developments
+						{{credentials.billTo}}
 					</p>
 				</td>
 			</tr>
@@ -278,21 +278,11 @@
 				</td>
 				<td style="width: 126pt">
 					<p style="padding-left: 13pt; text-indent: 0pt; text-align: left">
-						<a href="mailto:info@meladoredevelopments.c" class="s4"
-							>info@meladoredevelopments.c</a
+						<a href="mailto:{{credentials.billEmail}}" class="s4"
+							>{{credentials.billEmail}}</a
 						>
 					</p>
-					<p
-						class="s5"
-						style="
-							padding-left: 13pt;
-							text-indent: 0pt;
-							line-height: 8pt;
-							text-align: left;
-						"
-					>
-						o.uk
-					</p>
+
 				</td>
 			</tr>
 		</table>
@@ -351,6 +341,7 @@
 					</p>
 				</td>
 			</tr>
+      {{#each lines}}
 			<tr style="height: 21pt">
 				<td
 					style="
@@ -373,7 +364,7 @@
 							text-align: left;
 						"
 					>
-						Website Search Engine Optimisation July 2023
+						{{this.description}}
 					</p>
 				</td>
 				<td
@@ -397,10 +388,10 @@
 							text-align: right;
 						"
 					>
-						£ 150.00
+						£ {{this.amount}}
 					</p>
 				</td>
-			</tr>
+			</tr> {{/each}}
 		</table>
 		<p style="text-indent: 0pt; text-align: left"><br /></p>
 		<p style="text-indent: 0pt; text-align: left"><br /></p>
@@ -411,7 +402,7 @@
 			<tr style="height: 22pt">
 				<td
 					style="
-						width: 251pt;
+						width: 252pt;
 						border-top-style: solid;
 						border-top-width: 2pt;
 						border-top-color: #404040;
@@ -422,7 +413,7 @@
 						class="s8"
 						style="
 							padding-top: 5pt;
-							padding-right: 5pt;
+							padding-right: 6pt;
 							text-indent: 0pt;
 							text-align: right;
 						"
@@ -432,17 +423,17 @@
 				</td>
 				<td
 					style="
-						width: 49pt;
+						width: 48pt;
 						border-top-style: solid;
 						border-top-width: 2pt;
 						border-top-color: #404040;
 					"
 				>
 					<p
-						class="s7"
+						class="s8"
 						style="
 							padding-top: 5pt;
-							padding-left: 5pt;
+							padding-left: 6pt;
 							text-indent: 0pt;
 							text-align: left;
 						"
@@ -454,20 +445,20 @@
 					style="
 						width: 82pt;
 						border-top-style: solid;
-						border-top-width: 1pt;
+						border-top-width: 2pt;
 						border-top-color: #404040;
 					"
 				>
 					<p
-						class="s7"
+						class="s8"
 						style="
 							padding-top: 5pt;
-							padding-right: 18pt;
+							padding-right: 19pt;
 							text-indent: 0pt;
 							text-align: right;
 						"
 					>
-						150.00
+						{{subTotal}}
 					</p>
 				</td>
 			</tr>
@@ -483,11 +474,11 @@
 							text-align: left;
 						"
 					>
-						Bank: <span class="s10">HSBC </span>Account Name:
-						<span class="s10">Robert Saunders</span>
+						Bank: <span class="s10">{{bank.bankName}} </span>Account Name:
+						<span class="s10">{{bank.accountName}}</span>
 					</p>
 				</td>
-				<td style="width: 57pt">
+				<td style="width: 58pt">
 					<p
 						class="s8"
 						style="
@@ -500,34 +491,7 @@
 						Deposit
 					</p>
 				</td>
-				<td style="width: 131pt" colspan="2">
-					<p style="text-indent: 0pt; text-align: left"><br /></p>
-				</td>
-			</tr>
-			<tr style="height: 22pt">
-				<td style="width: 194pt">
-					<p
-						class="s9"
-						style="padding-left: 1pt; text-indent: 0pt; text-align: left"
-					>
-						Sort Code: <span class="s10">40-09-00 </span>Account Number:
-						<span class="s10">84602021</span>
-					</p>
-				</td>
-				<td style="width: 57pt">
-					<p
-						class="s8"
-						style="
-							padding-top: 6pt;
-							padding-left: 12pt;
-							text-indent: 0pt;
-							text-align: left;
-						"
-					>
-						OTHER
-					</p>
-				</td>
-				<td style="width: 49pt">
+				<td style="width: 48pt">
 					<p
 						class="s8"
 						style="
@@ -545,12 +509,62 @@
 						class="s8"
 						style="
 							padding-top: 6pt;
-							padding-left: 23pt;
+							padding-right: 19pt;
 							text-indent: 0pt;
-							text-align: center;
+							text-align: right;
 						"
 					>
-						-
+						{{description.deposit}}
+					</p>
+				</td>
+			</tr>
+			<tr style="height: 22pt">
+				<td style="width: 194pt">
+					<p
+						class="s9"
+						style="padding-left: 1pt; text-indent: 0pt; text-align: left"
+					>
+						Sort Code: <span class="s10">{{bank.sortCode}} </span>Account Number:
+						<span class="s10">{{bank.accountNumber}}</span>
+					</p>
+				</td>
+				<td style="width: 58pt">
+					<p
+						class="s8"
+						style="
+							padding-top: 6pt;
+							padding-left: 12pt;
+							text-indent: 0pt;
+							text-align: left;
+						"
+					>
+						DISCOUNT
+					</p>
+				</td>
+				<td style="width: 48pt">
+					<p
+						class="s8"
+						style="
+							padding-top: 6pt;
+							padding-left: 6pt;
+							text-indent: 0pt;
+							text-align: left;
+						"
+					>
+						£
+					</p>
+				</td>
+				<td style="width: 82pt">
+					<p
+						class="s8"
+						style="
+							padding-top: 6pt;
+							padding-right: 19pt;
+							text-indent: 0pt;
+							text-align: right;
+						"
+					>
+						{{description.discount}}
 					</p>
 				</td>
 			</tr>
@@ -568,7 +582,7 @@
 						THANK YOU FOR YOUR BUSINESS!
 					</p>
 				</td>
-				<td style="width: 57pt">
+				<td style="width: 58pt">
 					<p
 						class="s6"
 						style="
@@ -581,7 +595,7 @@
 						TOTAL
 					</p>
 				</td>
-				<td style="width: 49pt" bgcolor="#E7E6E6">
+				<td style="width: 48pt" bgcolor="#E7E6E6">
 					<p
 						class="s6"
 						style="
@@ -604,7 +618,7 @@
 							text-align: right;
 						"
 					>
-						150.00
+						{{total}}
 					</p>
 				</td>
 			</tr>

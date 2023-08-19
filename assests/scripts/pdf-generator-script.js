@@ -55,15 +55,15 @@ var options = {
 
 // 1) Invoice Credentials
 
-var credentials = [
-    {
+var credentials = {
+
         date: "18/07/2023",
         invoiceNo: "000121",
         summary: "SEO Work August 2023",
-        billTo: "Meladore",
-        billEmail: "info@meladoredevelopments.co.uk"
+        billTo: "email@email.com",
+        billEmail: "email@email.com"
     }
-];
+
 
 // 2) Invoice Description
 
@@ -100,25 +100,25 @@ function addition (calc) {
 
 // 4) Bank Details
 
-var bankDetails = [
+var bankDetails = 
     {
         bankName: "Lloyds Bank",
         accountName: "Robert Saunders",
         sortCode: "40-55-99",
         accountNumber: "15228965",
-    },
-];
+    };
 
 var document = {
     html: html,
     data: {
         credentials: credentials,
-        description: description,
+        lines: description[0].invoiceLines,
+        description: description[1],
         subTotal: subTotal,
         total: totalDue,
         bank: bankDetails
     },
-    path: "./invoice-"+credentials[0].invoiceNo+".pdf",
+    path: "./invoice-"+credentials.invoiceNo+".pdf",
     type: "",
 };
 // By default a file is created but you could switch between Buffer and Streams by using "buffer" or "stream" respectively.
