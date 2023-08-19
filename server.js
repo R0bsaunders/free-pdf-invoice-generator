@@ -1,6 +1,25 @@
+const express = require('express');
+const app = express();
 var pdf = require("pdf-creator-node");
 var fs = require("fs");
 var html = fs.readFileSync("pdf-template.html", "utf8");
+
+
+// Server
+
+app.set("view engine", "ejs");
+
+app.get('/make-me-a-pdf/:data', (req, res) => {
+    pdfGenerator(req.params.data)
+    console.log(req.params.data);
+    res.send("Done")
+    
+})
+
+app.listen(3000);
+
+
+function pdfGenerator (data) {
 
 var options = {
     format: "A4",
@@ -22,18 +41,15 @@ var options = {
 };
 
 
-
-
-
 // 1) Invoice Credentials
 
 var credentials = {
 
-        date: "18/07/2023",
-        invoiceNo: "000121",
-        summary: "SEO Work August 2023",
-        billTo: "email@email.com",
-        billEmail: "email@email.com"
+        date: "",
+        invoiceNo: data,
+        summary: "",
+        billTo: "",
+        billEmail: ""
     }
 
 
@@ -43,18 +59,18 @@ var description = [
     {
         invoiceLines: [
             {
-                description: "Lots and lots of work that is the best",
-                amount: 175
+                description: "",
+                amount: 0
             },
             {
-                description: "Another load of stuff",
-                amount: 254
+                description: "",
+                amount: 0
             },
         ],
     },
     {
-        deposit: 50,
-        discount: 10, 
+        deposit: 0,
+        discount: 0, 
     },
 ];
 
@@ -74,10 +90,10 @@ function addition (calc) {
 
 var bankDetails = 
     {
-        bankName: "Lloyds Bank",
-        accountName: "Robert Saunders",
-        sortCode: "40-55-99",
-        accountNumber: "15228965",
+        bankName: "",
+        accountName: "",
+        sortCode: "",
+        accountNumber: "",
     };
 
 var document = {
@@ -107,4 +123,6 @@ pdf
   });
 
 };
+create()
 
+};

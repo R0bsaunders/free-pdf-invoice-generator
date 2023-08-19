@@ -2,9 +2,9 @@
   "name": "scripts",
   "version": "1.0.0",
   "description": "",
-  "main": "pdf-generator-script.js",
+  "main": "generator.js",
   "scripts": {
-    "devStart": "nodemon generator.js"
+    "devStart": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
