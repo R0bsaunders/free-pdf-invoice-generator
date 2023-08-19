@@ -1,34 +1,5 @@
-const newRequest = [
-    {
-        date: "",
-        invoiceNo: 0,
-        summary: "",
-        billTo: "",
-        billEmail: "",
-        bankName: "",
-        accountName: "",
-        sortCode: "",
-        accountNumber: "",
-        deposit: 0,
-        discount: 0, 
-        subTotal: 0,
-        totalDue: 0,
-    },
-    {
-        invoiceLines: [
-            {
-                description: "",
-                amount: 0
-            },
-            {
-                description: "",
-                amount: 0
-            },
-        ],
-    },
-];
-
-// 3) Math
+const express = require('express');
+const app = express();
 
 var subTotal = addition(newRequest[1].invoiceLines);
 var totalDue = subTotal - newRequest[0].deposit - newRequest[0].discount;
@@ -42,9 +13,7 @@ function addition (calc) {
 
 
 
-
-
-const kopl = [
+const newRequest = [
     {
         date: "05/89/65",
         invoiceNo: 123456789,
@@ -82,4 +51,35 @@ const kopl = [
     },
 ]
 
-let g = encodeURIComponent(JSON.stringify(kopl));
+
+// const newRequest = [
+    //     {
+    //         date: "",
+    //         invoiceNo: 0,
+    //         summary: "",
+    //         billTo: "",
+    //         billEmail: "",
+    //         bankName: "",
+    //         accountName: "",
+    //         sortCode: "",
+    //         accountNumber: "",
+    //         deposit: 0,
+    //         discount: 0, 
+    //         subTotal: 0,
+    //         totalDue: 0,
+    //     },
+    //     {
+    //         invoiceLines: [
+    //             {
+    //                 description: "",
+    //                 amount: 0
+    //             },
+    //             {
+    //                 description: "",
+    //                 amount: 0
+    //             },
+    //         ],
+    //     },
+    // ];
+    
+    // // 3) Math

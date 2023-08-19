@@ -1,21 +1,18 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 // Server
 
 app.set("view engine", "ejs");
 
 app.get('/make-me-a-pdf/:data', (req, res) => {
-    console.log(req.params.data);
     let details = JSON.parse(decodeURIComponent(req.params.data))
-    pdfGenerator(details)
-    res.send(details)
+    console.log("Request sent");
+    pdfGenerator(details);
+    res.send("File Created");
     
-})
+});
 
 app.listen(3000);
 
@@ -28,10 +25,6 @@ function pdfGenerator (data) {
         format: "A4",
         orientation: "portrait",
         border: "10mm",
-        header: {
-            height: "45mm",
-            contents: '<div style="text-align: center;">Author: Yo Momma</div>'
-        },
         footer: {
             height: "28mm",
             contents: {
@@ -81,7 +74,7 @@ function pdfGenerator (data) {
         html: html,
         data: {
             credentials: credentials,
-            lines: description[0].invoiceLines,
+            lines: data[1].invoiceLines,
             description: description[1],
             subTotal: data[0].subTotal,
             total: data[0].totalDue,
@@ -109,32 +102,54 @@ function pdfGenerator (data) {
     };
 
 
+
     const newRequest = [
         {
-            date: "",
-            invoiceNo: 0,
-            summary: "",
-            billTo: "",
-            billEmail: "",
-            bankName: "",
-            accountName: "",
-            sortCode: "",
-            accountNumber: "",
-            deposit: 0,
-            discount: 0, 
-            subTotal: 0,
-            totalDue: 0,
+            date: "05/89/65",
+            invoiceNo: 123456789,
+            summary: "BLABLABLABL",
+            billTo: "Me",
+            billEmail: "YoYo@ghj.com",
+            bankName: "TLloyds",
+            accountName: "Rob",
+            sortCode: "50-45-00",
+            accountNumber: "1234567",
+            deposit: 25,
+            discount: 25, 
+            subTotal: 1300,
+            totalDue: 1800,
         },
         {
             invoiceLines: [
                 {
-                    description: "",
-                    amount: 0
+                    description: "Higgedlfy",
+                    amount: 75
                 },
                 {
-                    description: "",
-                    amount: 0
+                    description: "Higgedlfy",
+                    amount: 75
+                },
+                {
+                    description: "Higgedlfy",
+                    amount: 75
+                },
+                {
+                    description: "Higgedlfy",
+                    amount: 75
                 },
             ],
         },
-];
+    ]
+    function sendData () {
+        let transmit = encodeURIComponent(JSON.stringify(newRequest));
+        const Http = new XMLHttpRequest();
+        const url= `http://localhost:3000/make-me-a-pdf/${transmit}`;
+        Http.open("GET", url);
+        Http.send();
+    
+        Http.onreadystatechange =(e)=>{
+        console.log(Http.responseText);
+        };
+    };
+
+    sendData()
