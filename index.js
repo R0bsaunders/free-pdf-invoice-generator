@@ -7,6 +7,12 @@ const app = express();
 const http = require("http");
 var invoiceName = "";
 
+app.get("/", (req, res) => { 
+    res.send("Express on Vercel"); 
+}); 
+
+const PORT = process.env.PORT || 5000; 
+
 app.use(cors({
     exposedHeaders: ['X-Invoice-Name'], // add this line
 }));
@@ -178,5 +184,9 @@ server.listen(1234, function() {
     console.log("Server running on port 1234");
 });
 
+app.listen(PORT, () => { 
+    console.log(`Server is running on port ${PORT}`);
+    
+});
 
-app.listen(3000);
+module.exports = app; // Export the Express app
