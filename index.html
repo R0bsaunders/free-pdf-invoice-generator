@@ -3,11 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/Styles/front-end-style.css">
     <title>Document</title>
+
 </head>
 <body>
-    
-    <button id="submit">Button</button>
+
+    <header>
+        <div class="container">
+            <h1 class="display-4 fw-bold lh-1 mb-3 py-4">Quick and Easy Invoice Generator</h1>
+            <p class="fs-6"></p>
+        </div>
+    </header>
+
+    <section id="form-input">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-7 col-md-7 col-sm-12">
+
+                    <div class="card p-1">
+
+                        <div class="card-header">
+                            <h4>Invoice details</h4>
+                        </div>
+
+                        <div class="card-body p-1">
+                            <form id="form">
+
+                                <div class="mb-3 form-floating" onclick={eventHandler(event)}>
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)}  type="text" name="company_name" id="company_name" class="form-control" />
+                                    <label for="company_name">Your Company Name</label>
+
+                                </div>
+
+                                <div onclick={eventHandler(event)} class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} type="date" name="invoice_date" id="invoice_date" class="form-control" />
+                                    <label for="invoice_date">Invoice Date</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="text" name="invoice_number" id="invoice_number" class="form-control" />
+                                    <label>Invoice Number</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="text" name="invoice_summary" id="invoice_summary" class="form-control" />
+                                    <label>Invoice Summary</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)}  type="text" name="invoice_bill_to" id="invoice_bill_to" class="form-control" />
+                                    <label>Customer</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="text" name="invoice_bill_to_email" id="invoice_bill_to_email" class="form-control" />
+                                    <label>Customer's email</label>
+
+                                </div>
+                                
+                                <h4>Invoice Line 1</h4>
+                                
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="text" name="desc_line1" id="desc_line1" class="form-control" />
+                                    <label>Description</label>
+
+                                </div>
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="number" name="amount_line1" id="amount_line1" class="form-control" />
+                                    <label>Amount</label>
+
+                                </div>
+
+                                <h4>Invoice Line 2</h4>
+                                                    
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="text" name="desc_line2" id="desc_line2" class="form-control" />
+                                    <label>Description</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="number" name="amount_line2" id="amount_line2" class="form-control" />
+                                    <label>Amount</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="number" name="deposit" id="deposit" class="form-control" />
+                                    <label>Deposit</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="number" name="discount" id="discount" class="form-control" />
+                                    <label>Discount (value)</label>
+
+                                </div>
+
+                                <h4>Bank Details</h4>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="text" name="bankName" id="bankName" class="form-control" />
+                                    <label>Bank Name</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="text" name="accountName" id="accountName" class="form-control" />
+                                    <label>Account Name</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="text" name="sortCode" id="sortCode" class="form-control" />
+                                    <label>Sort Code</label>
+
+                                </div>
+
+                                <div class="mb-3 form-floating">
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="number" name="accountNumber" id="accountNumber" class="form-control" />
+                                    <label>Account Number</label>
+
+                                </div>
+
+                                <div class="mb-3">
+
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} type="submit" name="add_invoice" class="btn btn-primary" value="Add" />
+                                    
+                                </div>
+
+                                <div class="mb-3">
+                    
+                                    <input onchange={eventHandler(event)} onkeyup={eventHandler(event)} id="get-invoice" type="button" name="download_invoice" class="btn btn-warning" value="Download Invoice" />
+        
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-5 col-sm-12 preview-wrapper">
+                    <div class="border border-dark scale-down p-1">
+                        <table>
+                            <tr>
+                                <td style="width: 100%">
+                                    <h4 id="preview-company_name">Company Name</h4>
+                                </td>
+                                <td style="width: 100%">
+                                    <h5>INVOICE</h5>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        <div id="top-invoice-details">
+
+                            <div class="credentials-wrapper">
+                                <p class="invoice-credentials-top">Date:</p>
+                                <p id="preview-invoice_date" class="invoice-credentials-top-data"></p>
+                            </div>
+
+                            <div class="credentials-wrapper">
+                                <p class="invoice-credentials-top">Invoice #:</p>
+                                <p id="preview-invoice_number" class="invoice-credentials-top-data"></p>
+                            </div>
+
+                            <div class="credentials-wrapper">
+                                <p class="invoice-credentials-top">For:</p>
+                                <p id="preview-invoice_summary" class="invoice-credentials-top-data"></p>
+                            </div>
+
+                            <div class="credentials-wrapper">
+                                <p class="invoice-credentials-top">Bill To:</p>
+                                <p id="preview-invoice_bill_to" class="invoice-credentials-top-data"></p>
+                            </div>
+
+                            <div class="credentials-wrapper">
+                                <p class="invoice-credentials-top">Email:</p>
+                                <p id="preview-invoice_bill_to_email" class="invoice-credentials-top-data" style="text-align: left"><a href="mailto:{{credentials.billEmail}}"></a></p>
+                            </div>
+                            
+                        </div>
+
+                        <br />
+                       
+                        <table>
+                    
+                            <tr >
+                                <td class="invoice-rows-header">
+                                    <p class="s6" style="padding-top: 5pt; padding-left: 1pt; text-align: left;">DESCRIPTION</p>
+                                </td>
+                    
+                                <td class="invoice-rows-header">
+                                    <p class="s6" style="padding-top: 5pt; padding-right: 1pt; text-align: right;">AMOUNT</p>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td class="invoice-lines">
+                                    <p id="preview-desc_line1" class="s7" style="padding-top: 5pt; padding-left: 3pt; text-align: left;"></p>
+                                </td>
+                                <td class="invoice-lines">
+                                    <p id="preview-amount_line1" class="s7" style="padding-top: 5pt; padding-right: 3pt; text-align: right;"></p>
+                                </td>
+                            </tr>
+
+                            <tr >
+                                <td class="invoice-lines">
+                                    <p id="preview-desc_line2" class="s7" style="padding-top: 5pt; padding-left: 3pt; text-align: left;"></p>
+                                </td>
+                                <td class="invoice-lines">
+                                    <p id="preview-amount_line2" class="s7" style="padding-top: 5pt; padding-right: 3pt; text-align: right;"></p>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        <br>
+                        <br>
+                    
+                        <section>
+                        
+                            <div id="invoice-base">
+                                <div id="financial-details">
+
+                                    <p class="font-weight-bold">Bank: <span  id="preview-bankName"></span> Account Name: <span id="preview-accountName"></span></p>
+
+                                    <p class="s9" style="padding-left: 1pt; text-align: left">Sort Code: <span id="preview-sortCode"></span> Account Number: <span id="preview-accountNumber"></span></p>
+
+                                    <p class="s11" style="padding-top: 6pt; padding-left: 1pt; text-align: left;">THANK YOU FOR YOUR BUSINESS!</p>
+
+                                </div>
+
+                                <div class="center">
+                                    <div class="invoice-totals">
+                                        <p >SUBTOTAL</p>
+                                        <p class="align-start">£</p>
+                                        <p class="money" id="preview-subtotal"></p>
+
+                                    </div>
+
+                                    <div class="invoice-totals">
+                                        <p>DEPOSIT</p>
+                                        <p class="align-start">£</p>
+                                        <p class="money" id="preview-deposit"></p>
+
+                                    </div>
+
+                                    <div class="invoice-totals">
+                                        <p>DISCOUNT</p>
+                                        <p class="align-start">£</p>
+                                        <p class="money" id="preview-discount"></p>
+
+                                    </div>
+
+                                    <div class="invoice-totals total-row">
+                                        <p class="s6">TOTAL</p>
+                                        <p class="s6 align-start">£</p>
+                                        <p class="money" id="preview-total" class="s6"></p>
+
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+
+                            <div id="thank-you">
+                                <p>Payment on receipt is greatly appreciated</p>
+                            </div>
+
+                        </section>
+
+                             
+                    </div>
+                </div>
+            </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="./assets/scripts/script.js"></script>
+    <script src="./assets/scripts/eventHandler.js"></script>
 </body>
 </html>

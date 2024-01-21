@@ -1,34 +1,47 @@
 const express = require('express');
+const pdf = require("pdf-creator-node");
+const fs = require("fs");
+const html = fs.readFileSync("pdf-template.html", "utf8");
+const cors = require('cors');
 const app = express();
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const http = require("http");
+var invoiceName = "";
 
-// Server
+app.use(cors({
+    exposedHeaders: ['X-Invoice-Name'], // add this line
+}));
 
-app.set("view engine", "ejs");
+app.use(express.urlencoded({ 
+    extended: false,
+    limit: 10000,
+    parameterLimit: 16,
 
-app.get('/make-me-a-pdf/:data', (req, res) => {
-    let details = JSON.parse(decodeURIComponent(req.params.data))
-    console.log("Request sent");
-    pdfGenerator(details);
-    res.send("File Created");
-    
+}));
+
+app.post('/invoice', function(request, response){
+
+    writeCredentials(request.body)
+
 });
 
-app.listen(3000);
 
+const footerText = `<footer style="position: absolute; bottom: 0;">
+<div>Invoice generated using Rob Saunders' free Invoice Generator: <a href="https://www.quickinvoicegenerator.co.uk">www.quickinvoicegenerator.co.uk</a></div>
+</footer>`;
 
-function pdfGenerator (data) {
-    var pdf = require("pdf-creator-node");
-    var fs = require("fs");
-    var html = fs.readFileSync("pdf-template.html", "utf8");
-    var options = {
+const writeCredentials = (data) => {
+
+    invoiceName = data.invoice_number;
+    console.log(invoiceName);
+
+    const options = {
         format: "A4",
         orientation: "portrait",
         border: "10mm",
         footer: {
             height: "28mm",
             contents: {
-                first: 'Cover page',
+                first: footerText ,
                 2: 'Second page', // Any page number is working. 1-based index
                 default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
                 last: 'Last Page'
@@ -36,120 +49,134 @@ function pdfGenerator (data) {
         }
     };
 
-
     // 1) Invoice Credentials
-    var credentials = {
 
-        date: data[0].date,
-        invoiceNo: data[0].invoiceNo,
-        summary: data[0].summary,
-        billTo: data[0].billTo,
-        billEmail: data[0].billEmail,
-    };
+    const credentials = {
+        name: data.company_name,
+        date: data.invoice_date,
+        invoiceNo: data.invoice_number,
+        summary: data.invoice_summary,
+        billTo: data.invoice_bill_to,
+        billEmail: data.invoice_bill_to_email
+    }
 
     // 2) Invoice Description
-    var description = [
-        
-            data[1].invoiceLines,
-        
+
+    const description = [
         {
-            deposit: data[0].deposit,
-            discount: data[0].discount, 
+            invoiceLines: [
+                {
+                    description: data.desc_line1,
+                    amount: data.amount_line1
+                },
+                {
+                    description: data.desc_line2,
+                    amount: data.amount_line2
+                },
+            ],
+        },
+        {
+            deposit: data.deposit,
+            discount: data.discount, 
         },
     ];
 
+    // 3) Math
 
+    var subTotal = addition(description[0].invoiceLines);
+    var totalDue = subTotal - parseInt(description[1].deposit) - parseInt(description[1].discount);
+
+    function addition (calc) {
+
+        let x = 0
+        calc.forEach((e) => x += parseInt(e.amount))
+        return x;
+    };
 
     // 4) Bank Details
 
-    var bankDetails = 
+    const bankDetails = 
         {
-            bankName: data[0].bankName,
-            accountName: data[0].accountName,
-            sortCode: data[0].sortCode,
-            accountNumber: data[0].accountNumber,
+            bankName: data.bankName,
+            accountName: data.accountName,
+            sortCode: data.sortCode,
+            accountNumber: data.accountNumber,
         };
 
     var document = {
         html: html,
         data: {
             credentials: credentials,
-            lines: data[1].invoiceLines,
+            lines: description[0].invoiceLines,
             description: description[1],
-            subTotal: data[0].subTotal,
-            total: data[0].totalDue,
-            bank: bankDetails
+            subTotal: subTotal,
+            total: totalDue,
+            bank: bankDetails,
         },
         path: "invoice-"+credentials.invoiceNo+".pdf",
         type: "",
     };
+
+    
     // By default a file is created but you could switch between Buffer and Streams by using "buffer" or "stream" respectively.
 
     function create () {
 
-    pdf
-    .create(document, options)
-    .then((res) => {
-        console.log(res);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+        pdf
+        .create(document, options)
+        .then((res) => {
+            alert(res);
 
+        })
+
+        .catch((error) => {
+            console.error(error);
+        });
+    
     };
+
     create()
 
-    };
+}
 
-
-
-    const newRequest = [
-        {
-            date: "05/89/65",
-            invoiceNo: 123456789,
-            summary: "BLABLABLABL",
-            billTo: "Me",
-            billEmail: "YoYo@ghj.com",
-            bankName: "TLloyds",
-            accountName: "Rob",
-            sortCode: "50-45-00",
-            accountNumber: "1234567",
-            deposit: 25,
-            discount: 25, 
-            subTotal: 1300,
-            totalDue: 1800,
-        },
-        {
-            invoiceLines: [
-                {
-                    description: "Higgedlfy",
-                    amount: 75
-                },
-                {
-                    description: "Higgedlfy",
-                    amount: 75
-                },
-                {
-                    description: "Higgedlfy",
-                    amount: 75
-                },
-                {
-                    description: "Higgedlfy",
-                    amount: 75
-                },
-            ],
-        },
-    ]
-    function sendData () {
-        let transmit = encodeURIComponent(JSON.stringify(newRequest));
-        const Http = new XMLHttpRequest();
-        const url= `http://localhost:3000/make-me-a-pdf/${transmit}`;
-        Http.open("GET", url);
-        Http.send();
+const server = http.createServer(function(req, res) {
+    // Extract invoice name from the request, assume it's in the URL query or similar
     
-        Http.onreadystatechange =(e)=>{
-        console.log(Http.responseText);
-        };
-    };
+    let pdf = `${__dirname}/invoice-${invoiceName}.pdf`;
 
-    sendData()
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:5500");
+    res.setHeader("Access-Control-Expose-Headers", "X-Invoice-Name");
+    res.setHeader("X-Invoice-Name", invoiceName); // Setting custom header with invoice name
+
+    fs.readFile(pdf, function(err, content) {
+        if (err) {
+            console.error(err); // Log the error to the server console
+            res.writeHead(404, { "Content-Type": "text/html" });
+            res.end("Not Found");
+        } else {
+            res.writeHead(200, { "Content-Type": "application/pdf" });
+
+            res.end(content); // Send the PDF content to the client
+
+            setTimeout(() => {
+        
+                fs.unlink(pdf, (err) => {
+                    if (err) {
+                      console.error('There was an error:', err.message);
+                      return;
+                    }
+                    alert('File was deleted successfully');
+                });
+        
+            }, 5000);
+        }
+    });
+
+});
+
+server.listen(1234, function() {
+    console.log("Server running on port 1234");
+});
+
+
+app.listen(3000);

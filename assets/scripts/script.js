@@ -1,85 +1,66 @@
-const express = require('express');
-const app = express();
 
-var subTotal = addition(newRequest[1].invoiceLines);
-var totalDue = subTotal - newRequest[0].deposit - newRequest[0].discount;
+const form = document.getElementById('form');
+const getInvoice = document.getElementById('get-invoice');
 
-function addition (calc) {
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
 
-    let x = 0
-    calc.forEach((e) => x += e.amount)
-    return x;
-};
+    const urlencoded = new URLSearchParams(fd).toString();
 
+    fetch('http://localhost:3000/invoice', {
+        method: "POST",
+        body: urlencoded,
+        headers: {
+            'Content-type': 'application/x-www-form-urlencoded',
 
+        }
+    });
 
-const newRequest = [
-    {
-        date: "05/89/65",
-        invoiceNo: 123456789,
-        summary: "BLABLABLABL",
-        billTo: "Me",
-        billEmail: "YoYo@ghj.com",
-        bankName: "TLloyds",
-        accountName: "Rob",
-        sortCode: "50-45-00",
-        accountNumber: "1234567",
-        deposit: 25,
-        discount: 25, 
-        subTotal: 1300,
-        totalDue: 1800,
-    },
-    {
-        invoiceLines: [
-            {
-                description: "Higgedlfy",
-                amount: 75
-            },
-            {
-                description: "Higgedlfy",
-                amount: 75
-            },
-            {
-                description: "Higgedlfy",
-                amount: 75
-            },
-            {
-                description: "Higgedlfy",
-                amount: 75
-            },
-        ],
-    },
-]
+    alert("Invoice has been generated.")
 
+});
 
-// const newRequest = [
-    //     {
-    //         date: "",
-    //         invoiceNo: 0,
-    //         summary: "",
-    //         billTo: "",
-    //         billEmail: "",
-    //         bankName: "",
-    //         accountName: "",
-    //         sortCode: "",
-    //         accountNumber: "",
-    //         deposit: 0,
-    //         discount: 0, 
-    //         subTotal: 0,
-    //         totalDue: 0,
-    //     },
-    //     {
-    //         invoiceLines: [
-    //             {
-    //                 description: "",
-    //                 amount: 0
-    //             },
-    //             {
-    //                 description: "",
-    //                 amount: 0
-    //             },
-    //         ],
-    //     },
-    // ];
+let invoiceName = "Hello";
+
+getInvoice.addEventListener('click', (e) => {
     
-    // // 3) Math
+    e.preventDefault();
+
+    fetch('http://localhost:1234', {
+        method: "GET"
+
+    }).then(response => {
+
+        // Check response code
+        if(response.status === 404) {
+            alert('File does not exist');
+            throw new Error('File does not exist');
+
+        }
+        // Access the custom header
+        invoiceName = response.headers.get('X-Invoice-Name');
+    
+        // Proceed to get the blob for the PDF
+        return response.blob();
+
+    }).then(blob => {
+        // Create a link element, use it to download the blob, and remove it
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        // Use the invoiceName for the download filename if it was successfully retrieved
+        a.download = invoiceName ? `Invoice-${invoiceName}.pdf` : 'Your Invoice.pdf';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a); // Clean up
+        
+    }).catch(error => {
+        console.error('Fetch error:', error);
+    });
+    
+
+
+})
