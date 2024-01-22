@@ -6,6 +6,7 @@ const cors = require('cors');
 const app = express();
 const http = require("http");
 var invoiceName = "";
+const PORT = 3000;
 
 app.get("/", (req, res) => { 
     res.send("Express on Vercel"); 
@@ -15,7 +16,6 @@ app.get('/favicon.ico', (req, res) => {
     res.sendStatus(404);
 });
 
-const PORT = process.env.PORT || 5000; 
 
 app.use(cors({
     exposedHeaders: ['X-Invoice-Name'], // add this line
@@ -135,7 +135,7 @@ const writeCredentials = (data) => {
         pdf
         .create(document, options)
         .then((res) => {
-            alert(res);
+            console.log(res);
 
         })
 
@@ -154,7 +154,7 @@ const server = http.createServer(function(req, res) {
     
     let pdf = `${__dirname}/invoice-${invoiceName}.pdf`;
 
-    res.setHeader("Access-Control-Allow-Origin", "https://free-pdf-invoice-generator-yra5.vercel.app/");
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Expose-Headers", "X-Invoice-Name");
     res.setHeader("X-Invoice-Name", invoiceName); // Setting custom header with invoice name
 
@@ -188,6 +188,11 @@ server.listen(1234, function() {
     console.log("Server running on port 1234");
 });
 
-app.listen(3000);
+
+
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+  });
+
 
 module.exports = app; // Export the Express app
