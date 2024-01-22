@@ -8,10 +8,10 @@ const http = require("http");
 var invoiceName = "";
 const PORT = 3000;
 
-app.get("/", (req, res) => { 
-    res.send("Express on Vercel"); 
+// app.get("/", (req, res) => { 
+//     res.send("Express on Vercel"); 
 
-}); 
+// }); 
 
 app.get('/favicon.ico', (req, res) => {
     res.sendStatus(404);
