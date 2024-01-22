@@ -1,7 +1,7 @@
 const express = require('express');
 const pdf = require("pdf-creator-node");
 const fs = require("fs");
-const htmlPDF = fs.readFileSync("./assets/pdf-template.html", "utf8");
+// const htmlPDF = fs.readFileSync("pdf-template.html", "utf8");
 const cors = require('cors');
 const app = express();
 const http = require("http");
