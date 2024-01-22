@@ -8,7 +8,7 @@ form.addEventListener('submit', (e) => {
 
     const urlencoded = new URLSearchParams(fd).toString();
 
-    fetch('https://free-pdf-invoice-generator.vercel.app:3000/invoice', {
+    fetch('https://free-pdf-invoice-generator-yra5.vercel.app:3000/invoice', {
         method: "POST",
         body: urlencoded,
         headers: {
@@ -27,7 +27,7 @@ getInvoice.addEventListener('click', (e) => {
     
     e.preventDefault();
 
-    fetch('https://free-pdf-invoice-generator.vercel.app:1234', {
+    fetch('https://free-pdf-invoice-generator-yra5.vercel.app:1234', {
         method: "GET"
 
     }).then(response => {
