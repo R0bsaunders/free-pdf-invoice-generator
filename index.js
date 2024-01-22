@@ -1,7 +1,7 @@
 const express = require('express');
 const pdf = require("pdf-creator-node");
 const fs = require("fs");
-const html = fs.readFileSync("pdf-template.html", "utf8");
+const htmlPDF = fs.readFileSync("pdf-template.html", "utf8");
 const cors = require('cors');
 const app = express();
 const http = require("http");
@@ -116,7 +116,7 @@ const writeCredentials = (data) => {
         };
 
     var document = {
-        html: html,
+        html: htmlPDF,
         data: {
             credentials: credentials,
             lines: description[0].invoiceLines,
