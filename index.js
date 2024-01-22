@@ -150,7 +150,7 @@ const server = http.createServer(function(req, res) {
     
     let pdf = `${__dirname}/invoice-${invoiceName}.pdf`;
 
-    res.setHeader("Access-Control-Allow-Origin", "https://invoice-generator-2i0i21f41-r0bsaunders-projects.vercel.app/");
+    res.setHeader("Access-Control-Allow-Origin", "https://free-pdf-invoice-generator.vercel.app/");
     res.setHeader("Access-Control-Expose-Headers", "X-Invoice-Name");
     res.setHeader("X-Invoice-Name", invoiceName); // Setting custom header with invoice name
 
