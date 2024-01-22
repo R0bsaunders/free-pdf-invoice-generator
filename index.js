@@ -10,10 +10,12 @@ const PORT = 3000;
 
 app.get("/", (req, res) => { 
     res.send("Express on Vercel"); 
+
 }); 
 
 app.get('/favicon.ico', (req, res) => {
     res.sendStatus(404);
+    
 });
 
 
@@ -149,7 +151,7 @@ const writeCredentials = (data) => {
 
 }
 
-const server = http.createServer(function(req, res) {
+const createInvoice = http.createServer(function(req, res) {
     // Extract invoice name from the request, assume it's in the URL query or similar
     
     let pdf = `${__dirname}/invoice-${invoiceName}.pdf`;
@@ -175,7 +177,7 @@ const server = http.createServer(function(req, res) {
                       console.error('There was an error:', err.message);
                       return;
                     }
-                    alert('File was deleted successfully');
+                    console.log('File was deleted successfully');
                 });
         
             }, 5000);
@@ -184,11 +186,50 @@ const server = http.createServer(function(req, res) {
 
 });
 
-server.listen(1234, function() {
-    console.log("Server running on port 1234");
+createInvoice.listen(4321, function() {
+    console.log("Server running on port 4321");
 });
 
 
+
+const sendInvoice = http.createServer(function(req, res) {
+    // Extract invoice name from the request, assume it's in the URL query or similar
+    
+    let pdf = `${__dirname}/invoice-${invoiceName}.pdf`;
+
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Expose-Headers", "X-Invoice-Name");
+    res.setHeader("X-Invoice-Name", invoiceName); // Setting custom header with invoice name
+
+    fs.readFile(pdf, function(err, content) {
+        if (err) {
+            console.error(err); // Log the error to the server console
+            res.writeHead(404, { "Content-Type": "text/html" });
+            res.end("Not Found");
+        } else {
+            res.writeHead(200, { "Content-Type": "application/pdf" });
+
+            res.end(content); // Send the PDF content to the client
+
+            setTimeout(() => {
+        
+                fs.unlink(pdf, (err) => {
+                    if (err) {
+                      console.error('There was an error:', err.message);
+                      return;
+                    }
+                    console.log('File was deleted successfully');
+                });
+        
+            }, 5000);
+        }
+    });
+
+});
+
+sendInvoice.listen(1234, function() {
+    console.log("Server running on port 1234");
+});
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
