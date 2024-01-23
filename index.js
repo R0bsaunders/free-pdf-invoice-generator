@@ -9,8 +9,7 @@ var invoiceName = "";
 const PORT = 3000;
 
 app.get("/", (req, res) => { 
-    writeCredentials(req.body)
-    console.log(req.body);
+    res.send("Express on Vercel"); 
 
 }); 
 
@@ -230,7 +229,7 @@ const sendInvoice = http.createServer(function(req, res) {
 
 sendInvoice.listen(1234, function() {
     console.log("Server running on port 1234");
-
+    
 });
 
 app.listen(PORT, () => {
