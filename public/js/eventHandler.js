@@ -9,6 +9,7 @@ const total = document.getElementById('preview-total');
 var fileReady = false;
 
 const eventHandler = (e) => {
+    
     // Log the event
     console.log(e);
 
