@@ -4,7 +4,7 @@
   "description": "A quick way to create pdf invoices",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
