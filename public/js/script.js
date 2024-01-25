@@ -1,14 +1,14 @@
-
 const form = document.getElementById('form');
 const getInvoice = document.getElementById('get-invoice');
 
 form.addEventListener('submit', (e) => {
+
     e.preventDefault();
     const fd = new FormData(form);
 
     const urlencoded = new URLSearchParams(fd).toString();
 
-    fetch('https://free-pdf-invoice-generator-yra5.vercel.app:3000/invoice', {
+    fetch('http://localhost:3000/form-receiver', {
         method: "POST",
         body: urlencoded,
         headers: {
@@ -21,13 +21,13 @@ form.addEventListener('submit', (e) => {
 
 });
 
-let invoiceName = "Hello";
+let invoiceName = "125";
 
 getInvoice.addEventListener('click', (e) => {
     
     e.preventDefault();
 
-    fetch('https://free-pdf-invoice-generator-yra5.vercel.app:1234', {
+    fetch('http://localhost:3000/download', {
         method: "GET"
 
     }).then(response => {
