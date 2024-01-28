@@ -3,6 +3,7 @@ const app = express();
 const websitePort = 5500;
 const path = require('path')
 
+console.log("Hello");
 // Serve static files from the 'public' directory
 // Telling the express module that the public dir has all of our site assets
 app.use(express.static(path.join(__dirname + 'public')));
