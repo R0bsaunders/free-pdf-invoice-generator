@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const index = path.join(__dirname, '..', 'views', 'index.html');
 
+console.log("Index page reached");
 router.get('/', (req, res) => {
 
 
