@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
-const websitePort = 3000
+const websitePort = 5500;
+const path = require('path')
 
 // Serve static files from the 'public' directory
 // Telling the express module that the public dir has all of our site assets
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname + 'public')));
 
 // Require route modules
 const indexRouter = require('./routes/index');

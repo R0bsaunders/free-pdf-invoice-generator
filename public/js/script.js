@@ -8,7 +8,7 @@ form.addEventListener('submit', (e) => {
 
     const urlencoded = new URLSearchParams(fd).toString();
 
-    fetch('http://localhost:3000/form-receiver', {
+    fetch('http://localhost:5500/form-receiver', {
         method: "POST",
         body: urlencoded,
         headers: {
@@ -27,7 +27,7 @@ getInvoice.addEventListener('click', (e) => {
     
     e.preventDefault();
 
-    fetch('http://localhost:3000/download', {
+    fetch('http://localhost:5500/download', {
         method: "GET"
 
     }).then(response => {
