@@ -6,7 +6,7 @@ const path = require('path')
 console.log("Hello");
 // Serve static files from the 'public' directory
 // Telling the express module that the public dir has all of our site assets
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Require route modules
 const indexRouter = require('./routes/index');
