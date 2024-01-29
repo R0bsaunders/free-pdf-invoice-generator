@@ -4,8 +4,8 @@
   "description": "A quick way to create pdf invoices",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "vercel": "vercel"
+    "start": "node app.js"
+    
   },
   "keywords": [],
   "author": "",

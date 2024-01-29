@@ -114,7 +114,7 @@ const writeCredentials = (data) => {
             total: totalDue,
             bank: bankDetails,
         },
-        path: path.join(__dirname, '..', 'public', 'pdf', "invoice-"+credentials.invoiceNo+".pdf"),
+        path: path.join(__dirname, '..', 'public', 'pdf', "invoice-123.pdf"),
         type: "",
     };
 
