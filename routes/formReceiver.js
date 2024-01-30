@@ -18,7 +18,7 @@ router.use(express.urlencoded({
 
 }));
 
-router.post('/', (req, res) => {
+router.post('/form-receiver', (req, res) => {
     console.log("Form Receiver code loaded router works");
     console.log(req.body);
     writeCredentials(req.body)

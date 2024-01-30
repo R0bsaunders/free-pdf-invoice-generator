@@ -4,7 +4,7 @@ const path = require ('path')
 const fs = require("fs");
 const invoiceName = "123"
 
-router.get('/', (req, res) => {
+router.get('/download', (req, res) => {
 
     // Extract invoice name from the request, assume it's in the URL query or similar
     console.log("Download router works");
