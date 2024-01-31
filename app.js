@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const websitePort = process.env.PORT || 5500;
+const websitePort = process.env.PORT || 3000;
 const path = require('path')
 
 console.log("Hello");
